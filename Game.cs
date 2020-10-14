@@ -13,18 +13,21 @@ namespace Invaders
         private List<Entity> entities;
         private List<Entity> spawnList;
         private List<Entity> hitList;
+        private Window w;
         
-        public Game()
+        public Game(Window w)
         {
             textures = new Textures();
             entities = new List<Entity>();
             spawnList = new List<Entity>();
             hitList = new List<Entity>();
+            this.w = w;
         }
         public void Spawn(Entity entity)
         {
             spawnList.Add(entity);
             entity.Load(textures);
+            entity.OnSpawn(w)
         }
         public void Kill(Entity entity)
         {
