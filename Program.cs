@@ -11,11 +11,27 @@ namespace Invaders
         public const int ScreenH = 800;
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
             using (var window = new RenderWindow(new VideoMode(ScreenW, ScreenH), "Invaders"))
             {
                 window.Closed += (s, e) => window.Close();
+                Clock frameclock = new Clock();
+                Playership player = new Playership()
+                {
+                    Velocity = new Vector2f(0, 0),
+                    Position = new Vector2f(ScreenW / 2, ScreenH / 2)
+                };
+                Game game = new Game(window);
+                while (window.IsOpen)
+                {
+                    window.DispatchEvents();
+                    window.Clear(new Color(0, 0, 0));
+                    float deltaTime = frameclock.Restart().AsSeconds();
+                    game.RenderAll(window);
+                    game.Spawn(player);
+                    game.UpdateAll(deltaTime);
+
+                    window.Display();
+                }
             }
         }
     }
