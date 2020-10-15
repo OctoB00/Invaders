@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SFML.Graphics;
@@ -14,7 +14,7 @@ namespace Invaders
         private List<Entity> spawnList;
         private List<Entity> hitList;
         private Window w;
-        
+
         public Game(Window w)
         {
             textures = new Textures();
@@ -27,7 +27,7 @@ namespace Invaders
         {
             spawnList.Add(entity);
             entity.Load(textures);
-            entity.OnSpawn(w)
+            entity.OnSpawn(w);
         }
         public void Kill(Entity entity)
         {
@@ -49,11 +49,12 @@ namespace Invaders
             foreach (Entity entity in entities)
             {
                 entity.Update(this, deltaTime);
+                //entity.Move(1, deltaTime);
             }
-            //foreach (Entity entity in hitList)
-            //{
-            //    entities.Remove(entity);
-            //}
+            foreach (Entity entity in hitList)
+            {
+                entities.Remove(entity);
+            }
         }
         public void RenderAll(RenderTarget window)
         {
