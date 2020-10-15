@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SFML.Graphics;
@@ -7,10 +7,13 @@ using SFML.Window;
 
 namespace Invaders
 {
-    public class PlayerShip : Entity
+    public class Playership : Entity
     {
         private readonly Sprite sprite;
         private bool moveRight, moveLeft, moveUp, moveDown;
+        private Vector2f Direction;
+        private Vector2f newPosition;
+        private float speed = 250;
         public Playership()
         {
             sprite = new Sprite();
@@ -20,11 +23,11 @@ namespace Invaders
             sprite.Texture = textures.GetTexture("Playership.png");
             sprite.Origin = (Vector2f)sprite.Texture.Size * 0.5f;
         }
-        public Vector2f Velocity
-        {
-            get;
-            set;
-        }
+        //public Vector2f Velocity
+        //{
+        //    get;
+        //    set;
+        //}
         public override Vector2f Position
         {
             get => sprite.Position;
@@ -60,32 +63,40 @@ namespace Invaders
             w.KeyPressed -= OnKeyPressed;
             w.KeyReleased -= OnKeyReleased;
         }
+        //public override void Move(float speed, float deltaTime)
+        //{
+        //    newPosition = sprite.Position + Direction * (speed * deltaTime);
+        //}
         public override void Update(Game game, float deltaTime)
         {
+            newPosition = sprite.Position + Direction * (speed * deltaTime);
             if (moveLeft)
             {
-                Velocity = new Vector2f(-1, 0);
+                Direction = new Vector2f(-1, 0);
             }
-            if (moveRight)
+            else if (moveRight)
             {
-                Velocity = new Vector2f(1, 0);
+                Direction = new Vector2f(1, 0);
             }
-            if (moveUp)
+            else if (moveUp)
             {
-                Velocity = new Vector2f(0, -1);
+                Direction = new Vector2f(0, -1);
             }
-            if (moveDown)
+            else if (moveDown)
             {
-                Velocity = new Vector2f(0, 1);
+                Direction = new Vector2f(0, 1);
             }
-            Vector2f newPosition = sprite.Position + Velocity * deltaTime;
+            else
+            {
+                Direction = new Vector2f(0, 0);
+            }
             if (newPosition.Y + sprite.Origin.Y > Program.ScreenH || newPosition.Y - sprite.Origin.Y < 1)
             {
-                Velocity = new Vector2f(0, 0);
+                Direction.Y = 0;
             }
             else if (newPosition.X + sprite.Origin.X > Program.ScreenW || newPosition.X - sprite.Origin.X < 1)
             {
-                Velocity = new Vector2f(0, 0);
+                Direction.X = 0;
             }
             else
             {
