@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using SFML.Graphics;
@@ -26,6 +26,10 @@ namespace Invaders
 
         }
         public virtual void Render(RenderTarget target)
+        {
+
+        }
+        public virtual void Move(float speed, float deltaTime)
         {
 
         }
